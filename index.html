@@ -5,10 +5,7 @@
 <title>For My Love 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
-
-<!-- html2canvas for Instagram story capture -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
 </head>
 <body>
 
@@ -19,13 +16,15 @@
 <h1>💖 For My Love 💖</h1>
 
 <!-- Buttons -->
-<button onclick="toggleMode()">🌙 Love Mode</button>
-<button onclick="startConfetti()">🎉 Confetti!</button>
+<div class="controls">
+<button onclick="toggleTheme()">🎨 Theme</button>
+<button onclick="startConfetti()">🎉 Confetti</button>
 <button onclick="startRecording()">🎤 Record Voice</button>
 <button onclick="stopRecording()">⏹ Stop Recording</button>
 <a id="downloadAudio" style="display:none;">Download Voice</a>
 <button onclick="exportInstagram()">📱 Export Instagram Story</button>
 <a id="downloadStory" style="display:none;">Download Story</a>
+</div>
 
 <!-- Envelopes -->
 <div class="envelopes">
@@ -50,9 +49,9 @@
 <!-- Messages -->
 <h2>💌 Write for Me</h2>
 <textarea id="msgBox" placeholder="From your heart..." style="width:80%;height:80px;border-radius:12px"></textarea><br>
-<button onclick="saveMessage()">Send & Save 💖</button>
-<button onclick="share()">Share on WhatsApp 💚</button>
-<button onclick="generateLove()">✨ Generate Love Letter</button>
+<button onclick="saveMessage()">💖 Save Message</button>
+<button onclick="share()">💚 Share on WhatsApp</button>
+<button onclick="generateLove()">✨ Generate AI Love Letter</button>
 <p id="aiLove"></p>
 
 <!-- QR Canvas -->
@@ -71,7 +70,6 @@
  </div>
 </div>
 
-<!-- Audio player -->
 <audio id="audio"></audio>
 
 <script src="script.js"></script>
