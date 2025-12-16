@@ -251,35 +251,15 @@
     const msg = document.getElementById("modalMsg");
     const audio = document.getElementById("audio");
 
-    function openEnvelope(i) {
+   function openEnvelope(i) {
   current = i;
-
-  // Stop previous audio
-  audio.warning = false;
-  audio.pause();
-  audio.currentTime = 0;
-
-  // Hide modal first
-  modal.classList.remove("active");
-
-  // Force image reload
-  img.style.display = "none";
-  img.src = "";
-  img.onload = () => {
-    img.style.display = "block";
-    modal.classList.add("active");
-    effects();
-  };
-
-  // Set content
   img.src = envelopes[i].img;
   msg.innerText = envelopes[i].msg;
-
-  // Play song
   audio.src = envelopes[i].song;
   audio.play();
+  modal.classList.add("active");
+  effects();
 }
-
 
     function closeEnvelope() {
       modal.classList.remove("active");
