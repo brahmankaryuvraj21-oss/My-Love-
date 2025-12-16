@@ -18,7 +18,7 @@ const proposalBtns=document.getElementById("proposalBtns");
 
 data.sort(()=>Math.random()-0.5);
 
-// Envelopes
+// Envelope Functions
 function openEnvelope(i){
  current=i;
  modal.classList.add("active");
@@ -81,8 +81,13 @@ function startConfetti(){
  }
 }
 
-// Night Mode
-function toggleMode(){document.body.classList.toggle("night");}
+// Theme Toggle
+let themeIndex=1;
+function toggleTheme(){
+ themeIndex++;
+ if(themeIndex>4) themeIndex=1;
+ document.body.className='theme'+themeIndex;
+}
 
 // Secret watermark
 let clicks=0;
@@ -163,7 +168,7 @@ function stopRecording(){mediaRecorder.stop();}
 
 // Instagram Story Export
 function exportInstagram(){
-  alert("Recording your story for Instagram... 🎥");
+  alert("Recording your cinematic love story for Instagram... 🎥");
   const canvas = document.createElement('canvas');
   canvas.width = 1080;
   canvas.height = 1920;
@@ -182,13 +187,20 @@ function exportInstagram(){
     a.click();
   };
   mediaRecorderStory.start();
-  let t = 0;
-  const interval = setInterval(()=>{
-    t += 100;
-    html2canvas(document.body,{width:1080,height:1920}).then(c=>ctx.drawImage(c,0,0,1080,1920));
-    if(t>=6000){ // 6 seconds
-      clearInterval(interval);
-      mediaRecorderStory.stop();
+
+  // Auto play envelopes for 6 seconds each
+  let i=0;
+  const autoInterval = setInterval(()=>{
+    if(i<data.length){
+      openEnvelope(i);
+      fireworks();
+      startConfetti();
+      generateLove();
+      i++;
+    } else {
+      clearInterval(autoInterval);
+      setTimeout(()=>mediaRecorderStory.stop(),2000);
     }
-  },100);
+    html2canvas(document.body,{width:1080,height:1920}).then(c=>ctx.drawImage(c,0,0,1080,1920));
+  },4000);
 }
