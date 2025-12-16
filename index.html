@@ -4,177 +4,12 @@
 <meta charset="UTF-8">
 <title>For My Love 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 
-<style>
-*{box-sizing:border-box}
-body{
- margin:0;
- font-family:'Segoe UI',cursive;
- background:linear-gradient(135deg,#ffd1dc,#cdb4ff);
- color:white;
- text-align:center;
- overflow-x:hidden;
- transition:.6s;
-}
+<!-- html2canvas for Instagram story capture -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-/* INTRO */
-#intro{
- position:fixed; inset:0;
- background:linear-gradient(135deg,#ff9ecf,#b392f0);
- display:flex; align-items:center; justify-content:center;
- z-index:20;
- animation:introFade 6s forwards;
-}
-#intro h1{
- font-size:2em;
- white-space:nowrap;
- overflow:hidden;
- border-right:2px solid white;
- animation:type 4s steps(40);
-}
-@keyframes introFade{0%,80%{opacity:1}100%{opacity:0;pointer-events:none}}
-@keyframes type{from{width:0}to{width:100%}}
-
-/* PARALLAX */
-.parallax{
- position:fixed; inset:0;
- background:
-  radial-gradient(circle at 20% 30%,rgba(255,255,255,.15),transparent 40%),
-  radial-gradient(circle at 80% 70%,rgba(255,255,255,.12),transparent 40%);
- z-index:-1;
-}
-
-/* WATERMARK */
-#watermark{
- position:fixed; inset:0;
- display:flex; justify-content:center; align-items:center;
- font-size:18vw;
- color:rgba(255,255,255,0.12);
- pointer-events:auto;
- animation:glow 2.5s infinite alternate;
-}
-@keyframes glow{
- from{text-shadow:0 0 20px pink}
- to{text-shadow:0 0 40px violet}
-}
-
-/* HEART RAIN */
-.heart{
- position:fixed; top:-10px;
- animation:fall linear infinite;
-}
-@keyframes fall{to{transform:translateY(110vh)}}
-
-/* ENVELOPES */
-.envelopes{
- display:flex; flex-wrap:wrap;
- justify-content:center;
- margin:80px 0;
- z-index:2;
-}
-.envelope{
- width:120px; height:80px;
- background:#d63384;
- margin:18px;
- border-radius:8px;
- cursor:pointer;
- transition:.4s;
- transform-style:preserve-3d;
-}
-.envelope:hover{transform:rotateX(10deg) scale(1.1)}
-.envelope::after{
- content:"💌";
- font-size:32px;
- display:flex; justify-content:center; align-items:center;
- height:100%;
-}
-.final{
- border:3px solid gold;
- box-shadow:0 0 25px gold;
-}
-
-/* MODAL */
-.modal{
- position:fixed; inset:0;
- background:rgba(0,0,0,.75);
- display:none;
- align-items:center; justify-content:center;
- z-index:10;
-}
-.modal.active{display:flex}
-.modal-content{
- background:linear-gradient(135deg,#ffb3d9,#cdb4ff);
- padding:20px;
- border-radius:20px;
- max-width:90%;
- animation:pop .6s;
-}
-@keyframes pop{from{transform:scale(.7)}to{transform:scale(1)}}
-.modal-content img{
- width:260px;
- border-radius:15px;
- animation:imageReveal 1s;
-}
-@keyframes imageReveal{
- from{opacity:0;transform:scale(.85)}
- to{opacity:1;transform:scale(1)}
-}
-.proposal{
- border:3px solid gold;
- box-shadow:0 0 40px gold;
- animation:ringGlow 1.5s infinite alternate;
-}
-@keyframes ringGlow{
- from{box-shadow:0 0 20px gold}
- to{box-shadow:0 0 40px pink}
-}
-
-/* BUTTONS */
-button{
- background:#ff4d88;
- border:none;
- padding:10px 18px;
- border-radius:20px;
- color:white;
- cursor:pointer;
- margin:6px;
-}
-
-/* NIGHT MODE */
-body.night{
- background:linear-gradient(135deg,#0b0033,#1b004d);
-}
-
-/* TIMELINE */
-#timeline{
- max-width:500px;
- margin:auto;
-}
-.event{
- background:rgba(255,255,255,.15);
- margin:10px;
- padding:12px;
- border-radius:12px;
- animation:fadeUp 1s;
-}
-@keyframes fadeUp{
- from{opacity:0;transform:translateY(20px)}
- to{opacity:1;transform:translateY(0)}
-}
-
-/* FIREWORK */
-.firework{
- position:fixed;
- font-size:30px;
- animation:explode 1.2s forwards;
-}
-@keyframes explode{
- from{transform:scale(0)}
- to{transform:scale(2);opacity:0}
-}
-</style>
 </head>
-
 <body>
 
 <div id="intro"><h1>This story is for you, My Love… 💖</h1></div>
@@ -182,8 +17,17 @@ body.night{
 <div id="watermark">LOVE</div>
 
 <h1>💖 For My Love 💖</h1>
-<button onclick="toggleMode()">🌙 Love Mode</button>
 
+<!-- Buttons -->
+<button onclick="toggleMode()">🌙 Love Mode</button>
+<button onclick="startConfetti()">🎉 Confetti!</button>
+<button onclick="startRecording()">🎤 Record Voice</button>
+<button onclick="stopRecording()">⏹ Stop Recording</button>
+<a id="downloadAudio" style="display:none;">Download Voice</a>
+<button onclick="exportInstagram()">📱 Export Instagram Story</button>
+<a id="downloadStory" style="display:none;">Download Story</a>
+
+<!-- Envelopes -->
 <div class="envelopes">
  <div class="envelope" onclick="openEnvelope(0)"></div>
  <div class="envelope" onclick="openEnvelope(1)"></div>
@@ -194,6 +38,7 @@ body.night{
  <div class="envelope final" onclick="unlockProposal()"></div>
 </div>
 
+<!-- Timeline -->
 <section id="timeline">
  <h2>💞 Our Love Journey</h2>
  <div class="event">✨ The day we met</div>
@@ -202,6 +47,7 @@ body.night{
  <div class="event">💍 Today — my promise</div>
 </section>
 
+<!-- Messages -->
 <h2>💌 Write for Me</h2>
 <textarea id="msgBox" placeholder="From your heart..." style="width:80%;height:80px;border-radius:12px"></textarea><br>
 <button onclick="saveMessage()">Send & Save 💖</button>
@@ -209,8 +55,10 @@ body.night{
 <button onclick="generateLove()">✨ Generate Love Letter</button>
 <p id="aiLove"></p>
 
+<!-- QR Canvas -->
 <canvas id="qr" width="120" height="120"></canvas>
 
+<!-- Modal -->
 <div class="modal" id="modal">
  <div class="modal-content">
   <img id="photo">
@@ -223,127 +71,9 @@ body.night{
  </div>
 </div>
 
+<!-- Audio player -->
 <audio id="audio"></audio>
 
-<script>
-const data=[
- {img:"images/pic1.jpg",msg:"I love you, My Love 💕",song:"songs/song1.mp3"},
- {img:"images/pic2.jpg",msg:"You are my world 🌍",song:"songs/song2.mp3"},
- {img:"images/pic3.jpg",msg:"Every heartbeat says your name ❤️",song:"songs/song3.mp3"},
- {img:"images/pic4.jpg",msg:"Forever feels right with you ✨",song:"songs/song4.mp3"},
- {img:"images/pic5.jpg",msg:"My safe place is you 🌸",song:"songs/song5.mp3"},
- {img:"images/pic6.jpg",msg:"My heart chose you 💖",song:"songs/song6.mp3"},
- {img:"images/pic7.jpg",msg:"Will you marry me? 💍",song:"songs/song7.mp3"}
-];
-
-let current=0;
-const modal=document.getElementById("modal");
-const img=document.getElementById("photo");
-const msg=document.getElementById("message");
-const audio=document.getElementById("audio");
-const proposalBtns=document.getElementById("proposalBtns");
-
-data.sort(()=>Math.random()-0.5);
-
-function openEnvelope(i){
- current=i;
- modal.classList.add("active");
- proposalBtns.style.display="none";
- img.classList.remove("proposal");
- audio.pause(); audio.currentTime=0;
- img.src=data[i].img;
- msg.innerText=data[i].msg;
- audio.src=data[i].song;
- audio.play();
- if(i===6){
-  img.classList.add("proposal");
-  proposalBtns.style.display="block";
-  fireworks();
- }
- hearts();
-}
-
-function closeEnvelope(){modal.classList.remove("active");audio.pause();}
-function unlockProposal(){if(confirm("Final message 💍 Ready?"))openEnvelope(6);}
-function yes(){alert("She said YES 💖💍");fireworks();}
-function no(){alert("Try again 😄💗");}
-
-function hearts(){
- for(let i=0;i<15;i++){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerText="💖";
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=2+Math.random()*3+"s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),5000);
- }
-}
-
-function fireworks(){
- for(let i=0;i<10;i++){
-  const f=document.createElement("div");
-  f.className="firework";
-  f.innerText="✨";
-  f.style.left=Math.random()*100+"vw";
-  f.style.top=Math.random()*100+"vh";
-  document.body.appendChild(f);
-  setTimeout(()=>f.remove(),1200);
- }
-}
-
-function toggleMode(){document.body.classList.toggle("night");}
-
-let clicks=0;
-document.getElementById("watermark").onclick=()=>{
- clicks++;
- if(clicks===5)alert("💖 Secret: I choose you in every universe.");
-};
-
-function saveMessage(){
- const t=document.getElementById("msgBox").value;
- if(!t)return alert("Write something ❤️");
- const b=new Blob([t],{type:"text/plain"});
- const a=document.createElement("a");
- a.href=URL.createObjectURL(b);
- a.download="Message_From_My_Love.txt";
- a.click();
-}
-
-function share(){
- window.open("https://wa.me/?text="+encodeURIComponent("Our love 💖 "+location.href));
-}
-
-function generateLove(){
- const lines=[
-  "Every lifetime I would choose you 💖",
-  "You are my miracle 🌸",
-  "Forever begins with you 💍",
-  "My heart is home with you ❤️"
- ];
- document.getElementById("aiLove").innerText=
-  lines[Math.floor(Math.random()*lines.length)];
-}
-
-function drawQR(){
- const c=document.getElementById("qr");
- const x=c.getContext("2d");
- x.fillStyle="#fff";x.fillRect(0,0,120,120);
- x.fillStyle="#000";
- for(let i=0;i<120;i+=10)
-  for(let j=0;j<120;j+=10)
-   if(Math.random()>.5)x.fillRect(i,j,8,8);
-}
-drawQR();
-
-if("serviceWorker"in navigator){
- navigator.serviceWorker.register("sw.js");
-}
-
-window.addEventListener("mousemove",e=>{
- document.querySelector(".parallax").style.transform=
-  `translate(${e.clientX/50}px,${e.clientY/50}px)`;
-});
-</script>
+<script src="script.js"></script>
 </body>
 </html>
