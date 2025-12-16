@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For My Love ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===================== GLOBAL STYLES ===================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Playfair Display', serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffd1dc, #d8b4f8);
+      overflow-x: hidden;
+      text-align: center;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      background: #ff5fa2;
+      color: white;
+      margin: 5px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff2f8e;
+      transform: scale(1.05);
+    }
+
+    /* ===================== WATERMARK LOVE ===================== */
+    .watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 120px;
+      color: rgba(255, 255, 255, 0.15);
+      z-index: 0;
+      pointer-events: none;
+      text-shadow: 0 0 20px rgba(255,255,255,0.6);
+      animation: sparkle 3s infinite alternate;
+    }
+
+    @keyframes sparkle {
+      0% { text-shadow: 0 0 10px #fff; }
+      100% { text-shadow: 0 0 30px #ff9ad5; }
+    }
+
+    /* ===================== ENVELOPES ===================== */
+    .envelopes {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 80px 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .envelope {
+      width: 120px;
+      height: 80px;
+      background: #d81b60;
+      border-radius: 8px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s;
+    }
+
+    .envelope:hover {
+      transform: translateY(-8px) scale(1.05);
+    }
+
+    .envelope.final {
+      box-shadow: 0 0 25px gold;
+    }
+
+    /* ===================== MODAL ===================== */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff0f6;
+      padding: 25px;
+      border-radius: 20px;
+      max-width: 90%;
+      width: 350px;
+      animation: pop 0.5s ease;
+      position: relative;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-content img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 15px;
+    }
+
+    .message {
+      font-size: 18px;
+      margin-bottom: 15px;
+      animation: fadeScale 1s ease;
+    }
+
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* ===================== GLITTER & BUTTERFLIES ===================== */
+    .glitter, .butterfly {
+      position: absolute;
+      pointer-events: none;
+      animation: float 3s linear infinite;
+    }
+
+    .glitter {
+      width: 6px;
+      height: 6px;
+      background: radial-gradient(circle, #fff, #ff9ad5);
+      border-radius: 50%;
+    }
+
+    .butterfly {
+      font-size: 20px;
+    }
+
+    @keyframes float {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-200px); opacity: 0; }
+    }
+
+    /* ===================== MESSAGE BOX ===================== */
+    .message-box {
+      padding: 40px 20px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 20px;
+      margin: 40px;
+      z-index: 2;
+      position: relative;
+    }
+
+    textarea {
+      width: 100%;
+      max-width: 400px;
+      height: 120px;
+      border-radius: 15px;
+      border: none;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    /* ===================== INSTAGRAM SIMULATION ===================== */
+    .insta-preview {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      .watermark {
+        font-size: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOVE WATERMARK -->
+  <div class="watermark">LOVE</div>
+
+  <!-- ENVELOPES -->
+  <div class="envelopes">
+    <div class="envelope" onclick="openEnvelope(0)"></div>
+    <div class="envelope" onclick="openEnvelope(1)"></div>
+    <div class="envelope" onclick="openEnvelope(2)"></div>
+    <div class="envelope" onclick="openEnvelope(3)"></div>
+    <div class="envelope" onclick="openEnvelope(4)"></div>
+    <div class="envelope" onclick="openEnvelope(5)"></div>
+    <div class="envelope final" onclick="openEnvelope(6)"></div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal">
+    <div class="modal-content" id="modalContent">
+      <img id="modalImg" src="" alt="">
+      <div class="message" id="modalMsg"></div>
+      <button onclick="closeEnvelope()">Close Envelope</button>
+      <button onclick="nextEnvelope()">Go to Another Envelope</button>
+      <button onclick="openInsta()">Add to Instagram Story</button>
+    </div>
+  </div>
+
+  <!-- MESSAGE BOX -->
+  <div class="message-box">
+    <h2>Write a message for me 💌</h2><br>
+    <textarea placeholder="Write from your heart..."></textarea><br><br>
+    <button onclick="sendMessage()">Send</button>
+    <div id="sentMsg"></div>
+    <div class="insta-preview">Instagram Story feature is a frontend visual simulation.</div>
+  </div>
+
+  <!-- AUDIO -->
+  <audio id="audio"></audio>
+
+  <script>
+    /* ===================== DATA ===================== */
+    const envelopes = [
+      { img: "images/pic1.jpg", msg: "I love you 💕", song: "songs/song1.mp3" },
+      { img: "images/pic2.jpg", msg: "You are my world 🌍", song: "songs/song2.mp3" },
+      { img: "images/pic3.jpg", msg: "Every heartbeat is yours ❤️", song: "songs/song3.mp3" },
+      { img: "images/pic4.jpg", msg: "Forever starts with you ✨", song: "songs/song4.mp3" },
+      { img: "images/pic5.jpg", msg: "You complete me 💖", song: "songs/song5.mp3" },
+      { img: "images/pic6.jpg", msg: "My safe place is you 🌸", song: "songs/song6.mp3" },
+      { img: "images/pic7.jpg", msg: "Will you marry me? 💍", song: "songs/song7.mp3" }
+    ];
+
+    let current = 0;
+    const modal = document.getElementById("modal");
+    const img = document.getElementById("modalImg");
+    const msg = document.getElementById("modalMsg");
+    const audio = document.getElementById("audio");
+
+    function openEnvelope(i) {
+      current = i;
+      img.src = envelopes[i].img;
+      msg.innerText = envelopes[i].msg;
+      audio.src = envelopes[i].song;
+      audio.play();
+      modal.classList.add("active");
+      effects();
+    }
+
+    function closeEnvelope() {
+      modal.classList.remove("active");
+      audio.pause();
+    }
+
+    function nextEnvelope() {
+      closeEnvelope();
+    }
+
+    function effects() {
+      for (let i = 0; i < 15; i++) {
+        let g = document.createElement("div");
+        g.className = "glitter";
+        g.style.left = Math.random() * 100 + "%";
+        g.style.top = "100%";
+        document.body.appendChild(g);
+        setTimeout(() => g.remove(), 3000);
+
+        let b = document.createElement("div");
+        b.className = "butterfly";
+        b.innerText = "🦋";
+        b.style.left = Math.random() * 100 + "%";
+        b.style.top = "100%";
+        document.body.appendChild(b);
+        setTimeout(() => b.remove(), 3000);
+      }
+    }
+
+    function sendMessage() {
+      document.getElementById("sentMsg").innerText = "Message sent with love 💕";
+    }
+
+    function openInsta() {
+      alert("Instagram Story preview simulation ❤️");
+    }
+  </script>
+
+</body>
+</html>
