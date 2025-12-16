@@ -133,10 +133,11 @@ button{
  margin:6px;
 }
 
-/* NIGHT MODE */
-body.night{
- background:linear-gradient(135deg,#0b0033,#1b004d);
-}
+/* THEME CLASSES */
+body.theme1{background:linear-gradient(135deg,#ffd1dc,#cdb4ff);}
+body.theme2{background:linear-gradient(135deg,#0b0033,#1b004d);}
+body.theme3{background:linear-gradient(135deg,#ffb347,#ffcc33);}
+body.theme4{background:linear-gradient(135deg,#00c6ff,#0072ff);}
 
 /* TIMELINE */
 #timeline{
