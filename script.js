@@ -1,3 +1,4 @@
+/* ENVELOPE DATA */
 const data=[
  {img:"images/pic1.jpg",msg:"I love you 💖",song:"songs/song1.mp3"},
  {img:"images/pic2.jpg",msg:"You are my world 🌍",song:"songs/song2.mp3"},
@@ -12,20 +13,29 @@ const modal=document.getElementById("modal");
 const img=document.getElementById("photo");
 const msg=document.getElementById("message");
 const audio=document.getElementById("audio");
+const proposalBtns=document.getElementById("proposalBtns");
 
+/* ENVELOPES */
 function openEnvelope(i){
  modal.classList.add("active");
  img.src=data[i].img;
  msg.innerText=data[i].msg;
  audio.src=data[i].song;
  audio.play();
+
+ proposalBtns.style.display = (i===6) ? "block" : "none";
  if(i===6) fireworks();
 }
 
-function closeEnvelope(){modal.classList.remove("active");audio.pause();}
+function closeEnvelope(){
+ modal.classList.remove("active");
+ audio.pause();
+}
+
 function yes(){alert("She said YES 💖💍");fireworks();}
 function no(){alert("Hehe 😄 Take your time ❤️");}
 
+/* FIREWORKS */
 function fireworks(){
  for(let i=0;i<8;i++){
   const f=document.createElement("div");
@@ -38,18 +48,45 @@ function fireworks(){
  }
 }
 
-/* Theme */
-let theme=localStorage.getItem("theme")||1;
-document.body.className="theme"+theme;
-function changeTheme(){
- theme++;
- if(theme>4) theme=1;
- document.body.className="theme"+theme;
- localStorage.setItem("theme",theme);
+/* THEMES + BACKGROUND MUSIC */
+let currentTheme = Number(localStorage.getItem("theme")) || 1;
+const bgMusic=document.getElementById("bgMusic");
+let musicStarted=false;
+
+const themeMusic={
+  1:"songs/theme1.mp3",
+  2:"songs/theme2.mp3",
+  3:"songs/theme3.mp3",
+  4:"songs/theme4.mp3"
+};
+
+applyTheme();
+
+function applyTheme(){
+ document.body.className="theme-"+currentTheme;
+ bgMusic.pause();
+ bgMusic.src=themeMusic[currentTheme];
+ bgMusic.load();
+ if(musicStarted) bgMusic.play().catch(()=>{});
 }
 
-/* Voice Recording */
-let recorder, chunks=[], recordedBlob;
+function changeTheme(){
+ musicStarted=true;
+ currentTheme++;
+ if(currentTheme>4) currentTheme=1;
+ localStorage.setItem("theme",currentTheme);
+ applyTheme();
+}
+
+document.addEventListener("click",()=>{
+ if(!musicStarted){
+  musicStarted=true;
+  applyTheme();
+ }
+},{once:true});
+
+/* VOICE RECORDING */
+let recorder,chunks=[],recordedBlob;
 
 function startRecording(){
  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
@@ -59,11 +96,11 @@ function startRecording(){
   recorder.ondataavailable=e=>chunks.push(e.data);
   recorder.onstop=()=>{
    recordedBlob=new Blob(chunks,{type:"audio/mp3"});
-   document.getElementById("voicePlayback").src=URL.createObjectURL(recordedBlob);
+   document.getElementById("voicePlayback").src=
+    URL.createObjectURL(recordedBlob);
   };
  });
 }
-
 function stopRecording(){if(recorder) recorder.stop();}
 function playRecording(){document.getElementById("voicePlayback").play();}
 function downloadRecording(){
@@ -74,7 +111,7 @@ function downloadRecording(){
  a.click();
 }
 
-/* Text */
+/* TEXT */
 const box=document.getElementById("msgBox");
 box.value=localStorage.getItem("loveText")||"";
 box.oninput=()=>localStorage.setItem("loveText",box.value);
@@ -94,5 +131,5 @@ function share(){
 function generateLove(){
  const lines=["Forever you ❤️","You are my home 💖","Always us 💍"];
  document.getElementById("aiLove").innerText=
- lines[Math.floor(Math.random()*lines.length)];
+  lines[Math.floor(Math.random()*lines.length)];
 }
