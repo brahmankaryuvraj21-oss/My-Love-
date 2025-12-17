@@ -1,4 +1,39 @@
-/* ENVELOPE DATA */
+/******** THEME + MUSIC (FIXED 100%) ********/
+const bgMusic = document.getElementById("bgMusic");
+
+const themes = [
+  { class:"theme-1", music:"songs/theme1.mp3" },
+  { class:"theme-2", music:"songs/theme2.mp3" },
+  { class:"theme-3", music:"songs/theme3.mp3" },
+  { class:"theme-4", music:"songs/theme4.mp3" }
+];
+
+let currentTheme = Number(localStorage.getItem("theme")) || 0;
+let musicAllowed = false;
+
+function applyTheme(){
+  document.body.classList.remove("theme-1","theme-2","theme-3","theme-4");
+  document.body.classList.add(themes[currentTheme].class);
+
+  bgMusic.pause();
+  bgMusic.src = themes[currentTheme].music;
+  bgMusic.currentTime = 0;
+
+  if(musicAllowed){
+    bgMusic.play().catch(()=>{});
+  }
+}
+
+function changeTheme(){
+  musicAllowed = true;               // REQUIRED for audio
+  currentTheme = (currentTheme + 1) % themes.length;
+  localStorage.setItem("theme", currentTheme);
+  applyTheme();
+}
+
+window.addEventListener("load", applyTheme);
+
+/******** ENVELOPES ********/
 const data=[
  {img:"images/pic1.jpg",msg:"I love you 💖",song:"songs/song1.mp3"},
  {img:"images/pic2.jpg",msg:"You are my world 🌍",song:"songs/song2.mp3"},
@@ -15,7 +50,6 @@ const msg=document.getElementById("message");
 const audio=document.getElementById("audio");
 const proposalBtns=document.getElementById("proposalBtns");
 
-/* ENVELOPES */
 function openEnvelope(i){
  modal.classList.add("active");
  img.src=data[i].img;
@@ -35,7 +69,7 @@ function closeEnvelope(){
 function yes(){alert("She said YES 💖💍");fireworks();}
 function no(){alert("Hehe 😄 Take your time ❤️");}
 
-/* FIREWORKS */
+/******** FIREWORKS ********/
 function fireworks(){
  for(let i=0;i<8;i++){
   const f=document.createElement("div");
@@ -48,44 +82,7 @@ function fireworks(){
  }
 }
 
-/* THEMES + BACKGROUND MUSIC */
-let currentTheme = Number(localStorage.getItem("theme")) || 1;
-const bgMusic=document.getElementById("bgMusic");
-let musicStarted=false;
-
-const themeMusic={
-  1:"songs/theme1.mp3",
-  2:"songs/theme2.mp3",
-  3:"songs/theme3.mp3",
-  4:"songs/theme4.mp3"
-};
-
-applyTheme();
-
-function applyTheme(){
- document.body.className="theme-"+currentTheme;
- bgMusic.pause();
- bgMusic.src=themeMusic[currentTheme];
- bgMusic.load();
- if(musicStarted) bgMusic.play().catch(()=>{});
-}
-
-function changeTheme(){
- musicStarted=true;
- currentTheme++;
- if(currentTheme>4) currentTheme=1;
- localStorage.setItem("theme",currentTheme);
- applyTheme();
-}
-
-document.addEventListener("click",()=>{
- if(!musicStarted){
-  musicStarted=true;
-  applyTheme();
- }
-},{once:true});
-
-/* VOICE RECORDING */
+/******** VOICE ********/
 let recorder,chunks=[],recordedBlob;
 
 function startRecording(){
@@ -96,8 +93,7 @@ function startRecording(){
   recorder.ondataavailable=e=>chunks.push(e.data);
   recorder.onstop=()=>{
    recordedBlob=new Blob(chunks,{type:"audio/mp3"});
-   document.getElementById("voicePlayback").src=
-    URL.createObjectURL(recordedBlob);
+   document.getElementById("voicePlayback").src=URL.createObjectURL(recordedBlob);
   };
  });
 }
@@ -111,7 +107,7 @@ function downloadRecording(){
  a.click();
 }
 
-/* TEXT */
+/******** TEXT ********/
 const box=document.getElementById("msgBox");
 box.value=localStorage.getItem("loveText")||"";
 box.oninput=()=>localStorage.setItem("loveText",box.value);
