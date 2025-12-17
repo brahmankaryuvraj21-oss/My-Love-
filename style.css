@@ -1,16 +1,16 @@
- body{
+body{
   margin:0;
   font-family:'Segoe UI',cursive;
-  background:linear-gradient(135deg,#ffd1dc,#cdb4ff);
   color:white;
   text-align:center;
   transition:0.6s;
 }
 
-body.theme1{background:linear-gradient(135deg,#ffd1dc,#cdb4ff);}
-body.theme2{background:linear-gradient(135deg,#0b0033,#1b004d);}
-body.theme3{background:linear-gradient(135deg,#00c6ff,#0072ff);}
-body.theme4{background:linear-gradient(135deg,#ffb347,#ffcc33);}
+/* THEMES */
+body.theme-1{background:linear-gradient(135deg,#ffd1dc,#cdb4ff);}
+body.theme-2{background:linear-gradient(135deg,#0b0033,#1b004d);}
+body.theme-3{background:linear-gradient(135deg,#00c6ff,#0072ff);}
+body.theme-4{background:linear-gradient(135deg,#ffb347,#ffcc33);}
 
 button{
   background:#ff4d88;
@@ -19,6 +19,7 @@ button{
   border-radius:20px;
   color:white;
   margin:5px;
+  cursor:pointer;
 }
 
 textarea{
@@ -42,6 +43,11 @@ textarea{
   cursor:pointer;
 }
 
+.envelope.final{
+  border:3px solid gold;
+  box-shadow:0 0 15px gold;
+}
+
 .modal{
   position:fixed;
   inset:0;
@@ -51,7 +57,7 @@ textarea{
   align-items:center;
 }
 
-.modal.active{display:flex}
+.modal.active{display:flex;}
 
 .modal-content{
   background:#ffb3d9;
