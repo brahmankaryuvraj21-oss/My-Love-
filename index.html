@@ -5,7 +5,6 @@
 <title>For My Love 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -15,62 +14,45 @@
 
 <h1>💖 For My Love 💖</h1>
 
-<!-- Buttons -->
 <div class="controls">
-<button onclick="toggleTheme()">🎨 Theme</button>
-<button onclick="startConfetti()">🎉 Confetti</button>
-<button onclick="startRecording()">🎤 Record Voice</button>
-<button onclick="stopRecording()">⏹ Stop Recording</button>
-<a id="downloadAudio" style="display:none;">Download Voice</a>
-<button onclick="exportInstagram()">📱 Export Instagram Story</button>
-<a id="downloadStory" style="display:none;">Download Story</a>
+  <button onclick="changeTheme()">🎨 Change Theme</button>
+  <button onclick="startRecording()">🎤 Record Voice</button>
+  <button onclick="stopRecording()">⏹ Stop</button>
+  <button onclick="playRecording()">▶ Play</button>
+  <button onclick="downloadRecording()">⬇ Download</button>
 </div>
 
-<!-- Envelopes -->
 <div class="envelopes">
- <div class="envelope" onclick="openEnvelope(0)"></div>
- <div class="envelope" onclick="openEnvelope(1)"></div>
- <div class="envelope" onclick="openEnvelope(2)"></div>
- <div class="envelope" onclick="openEnvelope(3)"></div>
- <div class="envelope" onclick="openEnvelope(4)"></div>
- <div class="envelope" onclick="openEnvelope(5)"></div>
- <div class="envelope final" onclick="unlockProposal()"></div>
+  <div class="envelope" onclick="openEnvelope(0)"></div>
+  <div class="envelope" onclick="openEnvelope(1)"></div>
+  <div class="envelope" onclick="openEnvelope(2)"></div>
+  <div class="envelope" onclick="openEnvelope(3)"></div>
+  <div class="envelope" onclick="openEnvelope(4)"></div>
+  <div class="envelope" onclick="openEnvelope(5)"></div>
+  <div class="envelope final" onclick="openEnvelope(6)"></div>
 </div>
 
-<!-- Timeline -->
-<section id="timeline">
- <h2>💞 Our Love Journey</h2>
- <div class="event">✨ The day we met</div>
- <div class="event">💬 Our first conversation</div>
- <div class="event">❤️ The moment I fell for you</div>
- <div class="event">💍 Today — my promise</div>
-</section>
-
-<!-- Messages -->
 <h2>💌 Write for Me</h2>
-<textarea id="msgBox" placeholder="From your heart..." style="width:80%;height:80px;border-radius:12px"></textarea><br>
-<button onclick="saveMessage()">💖 Save Message</button>
-<button onclick="share()">💚 Share on WhatsApp</button>
-<button onclick="generateLove()">✨ Generate AI Love Letter</button>
+<textarea id="msgBox" placeholder="Write from your heart…"></textarea><br>
+<button onclick="saveMessage()">💾 Save Message</button>
+<button onclick="share()">💚 WhatsApp</button>
+<button onclick="generateLove()">✨ Love Line</button>
 <p id="aiLove"></p>
 
-<!-- QR Canvas -->
-<canvas id="qr" width="120" height="120"></canvas>
-
-<!-- Modal -->
 <div class="modal" id="modal">
- <div class="modal-content">
-  <img id="photo">
-  <h2 id="message"></h2>
-  <div id="proposalBtns" style="display:none">
-   <button onclick="yes()">YES 💍</button>
-   <button onclick="no()">NO 😄</button>
+  <div class="modal-content">
+    <img id="photo">
+    <h2 id="message"></h2>
+    <div id="proposalBtns">
+      <button onclick="yes()">YES 💍</button>
+      <button onclick="no()">NO 😄</button>
+    </div>
+    <button onclick="closeEnvelope()">Close</button>
   </div>
-  <button onclick="closeEnvelope()">Close</button>
- </div>
 </div>
 
 <audio id="audio"></audio>
+<audio id="voicePlayback"></audio>
 
 <script src="script.js"></script>
 </body>
