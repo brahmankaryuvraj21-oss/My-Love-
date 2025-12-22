@@ -4,54 +4,31 @@
 <meta charset="UTF-8">
 <title>For My Love 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-<h1>💖 For My Love 💖</h1>
+<body class="theme-rose">
 
-<div class="controls">
-  <button onclick="changeTheme()">🎨 Change Theme</button>
-  <button onclick="startRecording()">🎤 Record Voice</button>
-  <button onclick="stopRecording()">⏹ Stop</button>
-  <button onclick="playRecording()">▶ Play</button>
-  <button onclick="downloadRecording()">⬇ Download</button>
-</div>
+<header>
+  <h1>💖 For My Love 💖</h1>
+</header>
 
-<div class="envelopes">
-  <div class="envelope" onclick="openEnvelope(0)"></div>
-  <div class="envelope" onclick="openEnvelope(1)"></div>
-  <div class="envelope" onclick="openEnvelope(2)"></div>
-  <div class="envelope" onclick="openEnvelope(3)"></div>
-  <div class="envelope" onclick="openEnvelope(4)"></div>
-  <div class="envelope" onclick="openEnvelope(5)"></div>
-  <div class="envelope final" onclick="openEnvelope(6)"></div>
-</div>
+<section class="card">
+  <img src="images/pic1.jpg" class="main-img" alt="Love">
 
-<h2>💌 Write for Me</h2>
-<textarea id="msgBox" placeholder="Write from your heart…"></textarea><br>
-<button onclick="saveMessage()">💾 Save Message</button>
-<button onclick="share()">💚 WhatsApp</button>
-<button onclick="generateLove()">✨ Love Line</button>
-<p id="aiLove"></p>
+  <textarea id="loveText" placeholder="Write your message here 💌"></textarea>
 
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <img id="photo">
-    <h2 id="message"></h2>
-
-    <div id="proposalBtns">
-      <button onclick="yes()">YES 💍</button>
-      <button onclick="no()">NO 😄</button>
-    </div>
-
-    <button onclick="closeEnvelope()">Close</button>
+  <div class="buttons">
+    <button onclick="changeTheme()">🎨 Change Theme</button>
+    <button onclick="startRecording()">🎤 Record Voice</button>
+    <button onclick="playRecording()">▶️ Play</button>
+    <button onclick="stopRecording()">⏹ Stop</button>
   </div>
-</div>
+</section>
 
-<audio id="audio"></audio>
-<audio id="voicePlayback"></audio>
-<audio id="bgMusic" loop></audio>
+<audio id="audioPlayback" controls hidden></audio>
+<audio id="bgMusic" src="songs/theme.mp3" loop></audio>
 
 <script src="script.js"></script>
 </body>
